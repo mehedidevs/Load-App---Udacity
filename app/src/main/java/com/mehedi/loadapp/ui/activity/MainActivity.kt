@@ -1,4 +1,4 @@
-package com.mehedi.loadapp.ui
+package com.mehedi.loadapp.ui.activity
 
 import android.annotation.SuppressLint
 import android.app.DownloadManager
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            downloadFromInternet()
+            download()
         } else {
             showToast(getString(R.string.permission_is_needed))
         }
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 requestNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
             } else {
                 
-                downloadFromInternet()
+                download()
             }
             
             
@@ -103,8 +103,8 @@ class MainActivity : AppCompatActivity() {
                 binding.btnDownload.isEnabled = true
                 
                 detailsIntent = Intent(applicationContext, DetailActivity::class.java)
-                detailsIntent.putExtra(STATUS, status)
-                detailsIntent.putExtra(FILE_NAME, fileName)
+                detailsIntent.putExtra(DOWNLOAD_STATUS, status)
+                detailsIntent.putExtra(DOWNLOAD_FILE_NAME, fileName)
                 
                 pendingIntent = PendingIntent.getActivity(
                     applicationContext,
@@ -125,26 +125,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
     
-    private fun downloadFromInternet() {
+    private fun download() {
         notificationManager.cancelAll()
         if (downloadRadioValue.isBlank()) {
             Toast.makeText(this, getString(R.string.select_file), Toast.LENGTH_SHORT).show()
-            return
+        } else {
+            binding.btnDownload.isEnabled = false
+            val downloadRequest =
+                DownloadManager.Request(Uri.parse(downloadRadioValue))
+                    .setTitle(getString(R.string.app_name))
+                    .setDescription(getString(R.string.app_description))
+                    .setRequiresCharging(false)
+                    .setAllowedOverMetered(true)
+                    .setAllowedOverRoaming(true)
+            
+            val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+            downloadID = downloadManager.enqueue(downloadRequest)
         }
-        binding.btnDownload.isEnabled = false
-        val downloadRequest =
-            DownloadManager.Request(Uri.parse(downloadRadioValue))
-                .setTitle(getString(R.string.app_name))
-                .setDescription(getString(R.string.app_description))
-                .setRequiresCharging(false)
-                .setAllowedOverMetered(true)
-                .setAllowedOverRoaming(true)
         
-        val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        downloadID = downloadManager.enqueue(downloadRequest)
+        
     }
     
-     fun selectUrlOptions(view: View) {
+    fun selectUrlOptions(view: View) {
         if (view is RadioButton) {
             
             when (view.getId()) {
@@ -174,7 +176,7 @@ class MainActivity : AppCompatActivity() {
     
     companion object {
         const val NOTIFICATION_ID = 101
-        const val FILE_NAME = "file_name"
-        const val STATUS = "status"
+        const val DOWNLOAD_FILE_NAME = "file_name"
+        const val DOWNLOAD_STATUS = "status"
     }
 }

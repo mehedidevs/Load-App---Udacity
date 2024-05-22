@@ -8,7 +8,7 @@ import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import com.mehedi.loadapp.ui.MainActivity.Companion.NOTIFICATION_ID
+import com.mehedi.loadapp.ui.activity.MainActivity.Companion.NOTIFICATION_ID
 import com.mehedi.loadapp.R
 
 

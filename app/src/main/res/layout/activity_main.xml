@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <ImageView
         android:id="@+id/top_banner"
@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/spacing_small"
+            android:fontFamily="@font/roboto"
             android:onClick="selectUrlOptions"
             android:text="@string/glide_title"
             android:textSize="@dimen/font_medium" />
@@ -40,6 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/spacing_small"
+            android:fontFamily="@font/roboto"
             android:onClick="selectUrlOptions"
             android:text="@string/load_app_title"
             android:textSize="@dimen/font_medium" />
@@ -49,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/spacing_small"
+            android:fontFamily="@font/roboto"
             android:onClick="selectUrlOptions"
             android:text="@string/retrofit_title"
             android:textSize="@dimen/font_medium" />

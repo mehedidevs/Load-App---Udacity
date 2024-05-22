@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DetailActivity">
+    android:padding="16dp"
+    app:layoutDescription="@xml/activity_detail_scene"
+    tools:context=".ui.activity.DetailActivity">
 
     <TextView
+        android:fontFamily="@font/roboto"
         android:id="@+id/file_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:text="@string/file_name"
-        app:layout_constraintBaseline_toBaselineOf="@id/file_name_value"
+        app:layout_constraintBaseline_toBaselineOf="@id/txt_file_name_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:fontFamily="@font/roboto"
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_normal"
         android:text="@string/status"
-        app:layout_constraintBaseline_toBaselineOf="@id/status_value"
+        app:layout_constraintBaseline_toBaselineOf="@id/txt_status_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/file_name" />
 
     <TextView
-        android:id="@+id/file_name_value"
-        android:layout_width="200dp"
+        android:fontFamily="@font/roboto"
+        android:id="@+id/txt_file_name_value"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,25 +43,27 @@
         tools:text="@string/glide_title" />
 
     <TextView
-        android:id="@+id/status_value"
-        android:layout_width="@dimen/right_content"
+        android:fontFamily="@font/roboto"
+        android:id="@+id/txt_status_value"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/file_name_value"
+        app:layout_constraintStart_toStartOf="@id/txt_file_name_value"
+        app:layout_constraintTop_toBottomOf="@id/txt_file_name_value"
         tools:text="@string/status" />
 
-    <Button
-        android:id="@+id/detail_button"
-        android:layout_width="match_parent"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/spacing_normal"
         android:background="@color/colorAccent"
         android:text="@string/ok"
+        android:fontFamily="@font/roboto"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>
 

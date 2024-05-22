@@ -73,9 +73,11 @@ class DownloadButton @JvmOverloads constructor(
         buttonState = ButtonState.LOADING
         if (buttonState == ButtonState.LOADING) {
             animation()
+            invalidate()
+            return true
         }
-        invalidate()
-        return true
+        
+        return false
     }
     
     
