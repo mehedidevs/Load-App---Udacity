@@ -9,45 +9,48 @@
     tools:context=".ui.activity.DetailActivity">
 
     <TextView
-        android:fontFamily="@font/roboto"
         android:id="@+id/file_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_normal"
+        android:fontFamily="@font/roboto"
         android:text="@string/file_name"
         app:layout_constraintBaseline_toBaselineOf="@id/txt_file_name_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/txt_file_name_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_normal"
+        android:layout_marginTop="@dimen/spacing_normal"
         android:fontFamily="@font/roboto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/file_name"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/glide_title" />
+
+    <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
         android:layout_marginEnd="@dimen/spacing_normal"
+        android:fontFamily="@font/roboto"
         android:text="@string/status"
         app:layout_constraintBaseline_toBaselineOf="@id/txt_status_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/file_name" />
 
-    <TextView
-        android:fontFamily="@font/roboto"
-        android:id="@+id/txt_file_name_value"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/glide_title" />
 
     <TextView
-        android:fontFamily="@font/roboto"
         android:id="@+id/txt_status_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_normal"
+        android:fontFamily="@font/roboto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/txt_file_name_value"
         app:layout_constraintTop_toBottomOf="@id/txt_file_name_value"
@@ -57,10 +60,10 @@
         android:id="@+id/btn_back"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:text="@string/ok"
         android:fontFamily="@font/roboto"
+        android:text="@string/ok"
         android:textColor="@color/white"
+        app:cornerRadius="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
