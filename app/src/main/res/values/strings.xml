@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">Load App</string>
+    <string name="app_description">Download files from the Internet</string>
+    <string name="settings">Settings</string>
+
+    <string name="notif_channel_id">load_app_channel</string>
+    <string name="notif_channel_name">Load App Status Channel</string>
+    <string name="notif_title">Android Kotlin Nanodegree by Udacity </string>
+    <string name="notif_description"> The Project repository has been downloaded! </string>
+    <string name="notif_button">View changes</string>
+    <string name="notif_action">Check status</string>
+
+    <string name="select_file">You have to Select a file to download</string>
+    <string name="btn_name">Download</string>
+    <string name="btn_loading">Loading…</string>
+    <string name="activity_details_title">Detail Activity</string>
+    <string name="download_banner">Download Banner</string>
+
+    <string name="glide_title">Glide - Image Loading Library by BumpTech</string>
+    <string name="loadapp_title">LoadApp - Current Repository by Udacity</string>
+    <string name="retrofit_title">Retrofit - Type-safe HTTP Client for Android and Java by Square Inc.</string>
+
+    <string name="btn_normal_state">Normal</string>
+    <string name="btn_loading_state">Loading</string>
+    <string name="btn_completed_state">Completed</string>
+
+    <string name="download">Download</string>
+    <string name="loading">Loading…</string>
+    <string name="ok">OK</string>
+    <string name="file_name">File name:</string>
+    <string name="status">Status:</string>
+    <string name="status_success">Success</string>
+    <string name="status_failed">Failed</string>
+    <string name="permission_is_needed">This permission is needed to notify you downloaded files status</string>
+
 </resources>
