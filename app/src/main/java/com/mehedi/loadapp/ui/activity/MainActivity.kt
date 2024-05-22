@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pendingIntent: PendingIntent
     private lateinit var detailsIntent: Intent
     lateinit var binding: ActivityMainBinding
-    private var downloadRadioValue = ""
+    private var downloadUrl = ""
     
     
     private val notificationManager: NotificationManager by lazy {
@@ -99,11 +99,59 @@ class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
             
+            val downloadId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            val downloadManager =
+                context?.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+            val query = DownloadManager.Query().setFilterById(downloadId!!)
+            val cursor = downloadManager.query(query)
+            
+            if (cursor != null && cursor.moveToFirst()) {
+                val statusIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+                val reasonIndex = cursor.getColumnIndex(DownloadManager.COLUMN_REASON)
+                val uriIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)
+                
+                if (statusIndex >= 0) {
+                    val downloadStatus = cursor.getInt(statusIndex)
+                    when (downloadStatus) {
+                        DownloadManager.STATUS_SUCCESSFUL -> {
+                            if (uriIndex >= 0) {
+                                val uriString = cursor.getString(uriIndex)
+                                // Do something with the file URI
+                                status = getString(R.string.status_success)
+                            }
+                        }
+                        
+                        DownloadManager.STATUS_FAILED -> {
+                            if (reasonIndex >= 0) {
+                                val reason = cursor.getInt(reasonIndex)
+                                // Handle the failure reason
+                                status = getString(R.string.status_failed)
+                            }
+                        }
+                        
+                        DownloadManager.STATUS_RUNNING -> {
+                            // Download is in progress
+                        }
+                        
+                        DownloadManager.STATUS_PAUSED -> {
+                            // Download is paused
+                        }
+                        
+                        DownloadManager.STATUS_PENDING -> {
+                            // Download is pending
+                        }
+                    }
+                }
+            }
+            cursor?.close()
+            
+            
             if (downloadID == id) {
                 binding.btnDownload.isEnabled = true
                 
                 detailsIntent = Intent(applicationContext, DetailActivity::class.java)
                 detailsIntent.putExtra(DOWNLOAD_STATUS, status)
+                detailsIntent.putExtra(DOWNLOAD_FILE_NAME, fileName)
                 detailsIntent.putExtra(DOWNLOAD_FILE_NAME, fileName)
                 
                 pendingIntent = PendingIntent.getActivity(
@@ -125,47 +173,46 @@ class MainActivity : AppCompatActivity() {
         }
     }
     
+    
     private fun download() {
         notificationManager.cancelAll()
-        if (downloadRadioValue.isBlank()) {
+        
+        if (downloadUrl.isBlank()) {
             Toast.makeText(this, getString(R.string.select_file), Toast.LENGTH_SHORT).show()
-        } else {
-            binding.btnDownload.isEnabled = false
-            val downloadRequest =
-                DownloadManager.Request(Uri.parse(downloadRadioValue))
-                    .setTitle(getString(R.string.app_name))
-                    .setDescription(getString(R.string.app_description))
-                    .setRequiresCharging(false)
-                    .setAllowedOverMetered(true)
-                    .setAllowedOverRoaming(true)
-            
-            val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-            downloadID = downloadManager.enqueue(downloadRequest)
+            return
         }
+        
+        binding.btnDownload.isEnabled = false
+        val downloadRequest =
+            DownloadManager.Request(Uri.parse(downloadUrl))
+                .setTitle(getString(R.string.app_name))
+                .setDescription(getString(R.string.app_description))
+                .setRequiresCharging(false)
+                .setAllowedOverMetered(true)
+                .setAllowedOverRoaming(true)
+        
+        val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        downloadID = downloadManager.enqueue(downloadRequest)
         
         
     }
     
     fun selectUrlOptions(view: View) {
         if (view is RadioButton) {
-            
             when (view.getId()) {
                 R.id.glide_radio -> {
                     fileName = getString(R.string.glide_title)
-                    downloadRadioValue = GLIDE_URL
-                    status = getString(R.string.status_success)
+                    downloadUrl = GLIDE_URL
                 }
                 
                 R.id.load_app_radio -> {
-                    downloadRadioValue = LOAD_APP_URL
+                    downloadUrl = LOAD_APP_URL
                     fileName = getString(R.string.load_app_title)
-                    status = getString(R.string.status_failed)
                 }
                 
                 R.id.retrofit_radio -> {
-                    downloadRadioValue = RETROFIT_URL
+                    downloadUrl = RETROFIT_URL
                     fileName = getString(R.string.retrofit_title)
-                    status = getString(R.string.status_success)
                 }
                 
                 else -> NO_URL
@@ -177,6 +224,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val NOTIFICATION_ID = 101
         const val DOWNLOAD_FILE_NAME = "file_name"
+        const val DOWNLOAD_FILE_URI = "file_uri"
         const val DOWNLOAD_STATUS = "status"
     }
 }

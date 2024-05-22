@@ -19,6 +19,7 @@
         app:tint="@color/white" />
 
     <RadioGroup
+        android:id="@+id/optionGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_normal"
@@ -55,6 +56,8 @@
             android:onClick="selectUrlOptions"
             android:text="@string/retrofit_title"
             android:textSize="@dimen/font_medium" />
+
+
     </RadioGroup>
 
     <com.mehedi.loadapp.ui.custom.DownloadButton
