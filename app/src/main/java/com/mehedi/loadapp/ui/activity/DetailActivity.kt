@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.mehedi.loadapp.databinding.ActivityDetailBinding
 import com.mehedi.loadapp.ui.activity.MainActivity.Companion.DOWNLOAD_FILE_NAME
+import com.mehedi.loadapp.ui.activity.MainActivity.Companion.DOWNLOAD_FILE_URI
 import com.mehedi.loadapp.ui.activity.MainActivity.Companion.DOWNLOAD_STATUS
 import com.mehedi.loadapp.utils.cancelAllNotifications
 
@@ -33,6 +34,7 @@ class DetailActivity : AppCompatActivity() {
         binding.apply {
             txtFileNameValue.text = intent.getStringExtra(DOWNLOAD_FILE_NAME).toString()
             txtStatusValue.text = intent.getStringExtra(DOWNLOAD_STATUS).toString()
+            txtUriValue.text = intent.getStringExtra(DOWNLOAD_FILE_URI).toString()
         }
         
         binding.btnBack.setOnClickListener {

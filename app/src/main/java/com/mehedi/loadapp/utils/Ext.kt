@@ -59,6 +59,11 @@ fun NotificationManager.sendNotification(
         .setStyle(bigPicStyle)
         .setContentIntent(statusPendingIntent)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .addAction(
+            R.drawable.ic_details,
+            applicationContext.getString(R.string.notification_action),
+            statusPendingIntent
+        )
     
     notify(NOTIFICATION_ID, builder.build())
 }

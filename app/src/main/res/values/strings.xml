@@ -7,6 +7,7 @@
     <string name="notif_channel_name">Load App Status Channel</string>
     <string name="notif_title">Android Kotlin Nanodegree by Udacity </string>
     <string name="notif_description"> The Project repository has been downloaded! </string>
+    <string name="notification_action">Details</string>
 
     <string name="glide_title">Glide - Image Loading Library by BumpTech</string>
     <string name="load_app_title">LoadApp - Current Repository by Udacity</string>
@@ -23,11 +24,13 @@
     <string name="ok">OK</string>
     <string name="file_name">File name:</string>
     <string name="status">Status:</string>
+    <string name="uri">Url:</string>
     <string name="status_success">Success</string>
     <string name="status_failed">Failed</string>
     <string name="select_file">You have to Select a file or input a valid url to download</string>
     <string name="download_banner">Download Banner</string>
     <string name="dowanloadable_link">Enter a dowanloadable link</string>
     <string name="input_custom_url">Input Custom URL</string>
+
 
 </resources>

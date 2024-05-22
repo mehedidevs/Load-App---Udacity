@@ -12,6 +12,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var detailsIntent: Intent
     lateinit var binding: ActivityMainBinding
     private var downloadUrl = ""
+    private var downloadedFileUri = ""
     
     
     private val notificationManager: NotificationManager by lazy {
@@ -116,16 +118,17 @@ class MainActivity : AppCompatActivity() {
                         DownloadManager.STATUS_SUCCESSFUL -> {
                             if (uriIndex >= 0) {
                                 val uriString = cursor.getString(uriIndex)
-                                // Do something with the file URI
                                 status = getString(R.string.status_success)
+                                downloadedFileUri = uriString
                             }
                         }
                         
                         DownloadManager.STATUS_FAILED -> {
+                            status = getString(R.string.status_failed)
                             if (reasonIndex >= 0) {
                                 val reason = cursor.getInt(reasonIndex)
-                                // Handle the failure reason
-                                status = getString(R.string.status_failed)
+                                Log.d("TAG", "STATUS_FAILED: $reason ")
+                                
                             }
                         }
                         
@@ -152,7 +155,7 @@ class MainActivity : AppCompatActivity() {
                 detailsIntent = Intent(applicationContext, DetailActivity::class.java)
                 detailsIntent.putExtra(DOWNLOAD_STATUS, status)
                 detailsIntent.putExtra(DOWNLOAD_FILE_NAME, fileName)
-                detailsIntent.putExtra(DOWNLOAD_FILE_NAME, fileName)
+                detailsIntent.putExtra(DOWNLOAD_FILE_URI, downloadUrl)
                 
                 pendingIntent = PendingIntent.getActivity(
                     applicationContext,
