@@ -1,4 +1,4 @@
-package com.mehedi.loadapp
+package com.mehedi.loadapp.ui.custom
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -13,21 +13,17 @@ import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.withStyledAttributes
+import com.mehedi.loadapp.R
+import com.mehedi.loadapp.ui.custom.state.ButtonState
 import com.mehedi.loadapp.utils.dpToPx
-
-private sealed class ButtonState {
-    data object NORMAL : ButtonState()
-    data object LOADING : ButtonState()
-    data object COMPLETED : ButtonState()
-}
 
 class DownloadButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+    
     private var widthSize = 0
     private var heightSize = 0
     private var buttonState: ButtonState = ButtonState.NORMAL
-    
     private var normalButton = 0
     private var loadingButton = 0
     private var completedButton = 0
@@ -75,40 +71,18 @@ class DownloadButton @JvmOverloads constructor(
     override fun performClick(): Boolean {
         super.performClick()
         buttonState = ButtonState.LOADING
-        
         if (buttonState == ButtonState.LOADING) {
             animation()
         }
-        
         invalidate()
         return true
     }
     
-    private fun animation() {
-        val valueAnimator = ValueAnimator.ofFloat(0f, measuredWidth.toFloat())
-        
-        val updateListener = ValueAnimator.AnimatorUpdateListener { animated ->
-            progress = (animated.animatedValue as Float).toDouble()
-            invalidate()
-        }
-        
-        valueAnimator.duration = animationDuration
-        valueAnimator.addUpdateListener(updateListener)
-        valueAnimator.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                super.onAnimationEnd(animation)
-                buttonState = ButtonState.NORMAL
-            }
-        })
-        valueAnimator.start()
-    }
     
-    private fun drawButton(canvas: Canvas?) {
-        
-        
+    private fun drawButton(canvas: Canvas) {
         paint.color = normalButton
         val rect = RectF(0f, 0f, width.toFloat(), buttonHeight.dpToPx(this))
-        canvas?.drawRoundRect(rect, cornerRadius, cornerRadius, paint)
+        canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint)
         
         if (buttonState == ButtonState.LOADING) {
             paint.color = loadingButton
@@ -120,7 +94,7 @@ class DownloadButton @JvmOverloads constructor(
                 buttonHeight.dpToPx(this)
             )
             
-            canvas?.drawRoundRect(
+            canvas.drawRoundRect(
                 rectProgress,
                 cornerRadius, cornerRadius,
                 paint
@@ -137,10 +111,10 @@ class DownloadButton @JvmOverloads constructor(
                 arcCenterX + arcRadius,
                 arcCenterY + arcRadius
             )
-            canvas?.save()
+            canvas.save()
             paint.color = completedButton
-            canvas?.drawArc(arcRect, 0f, (360 * (progress / 100)).toFloat(), true, paint)
-            canvas?.restore()
+            canvas.drawArc(arcRect, 0f, (360 * (progress / 100)).toFloat(), true, paint)
+            canvas.restore()
         }
     }
     
@@ -159,6 +133,25 @@ class DownloadButton @JvmOverloads constructor(
         val textY =
             (buttonHeight.dpToPx(this) / 2f) - (textBounds.bottom + textBounds.top) / 2f
         canvas?.drawText(label, textX, textY, paint)
+    }
+    
+    private fun animation() {
+        val buttonAnimator = ValueAnimator.ofFloat(0f, measuredWidth.toFloat())
+        
+        val updateListener = ValueAnimator.AnimatorUpdateListener { animated ->
+            progress = (animated.animatedValue as Float).toDouble()
+            invalidate()
+        }
+        
+        buttonAnimator.duration = animationDuration
+        buttonAnimator.addUpdateListener(updateListener)
+        buttonAnimator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                super.onAnimationEnd(animation)
+                buttonState = ButtonState.NORMAL
+            }
+        })
+        buttonAnimator.start()
     }
     
     

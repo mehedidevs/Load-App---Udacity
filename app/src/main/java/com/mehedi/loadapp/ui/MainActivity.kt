@@ -1,4 +1,4 @@
-package com.mehedi.loadapp
+package com.mehedi.loadapp.ui
 
 import android.annotation.SuppressLint
 import android.app.DownloadManager
@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.mehedi.loadapp.R
 import com.mehedi.loadapp.databinding.ActivityMainBinding
 import com.mehedi.loadapp.utils.GLIDE_URL
 import com.mehedi.loadapp.utils.LOAD_APP_URL
@@ -50,7 +51,6 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-            notificationManager.cancelAll()
             downloadFromInternet()
         } else {
             showToast(getString(R.string.permission_is_needed))
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             ) {
                 requestNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
             } else {
-                notificationManager.cancelAll()
+                
                 downloadFromInternet()
             }
             
@@ -103,8 +103,9 @@ class MainActivity : AppCompatActivity() {
                 binding.btnDownload.isEnabled = true
                 
                 detailsIntent = Intent(applicationContext, DetailActivity::class.java)
-                detailsIntent.putExtra(FILE_NAME, fileName)
                 detailsIntent.putExtra(STATUS, status)
+                detailsIntent.putExtra(FILE_NAME, fileName)
+                
                 pendingIntent = PendingIntent.getActivity(
                     applicationContext,
                     NOTIFICATION_ID,
@@ -125,6 +126,7 @@ class MainActivity : AppCompatActivity() {
     }
     
     private fun downloadFromInternet() {
+        notificationManager.cancelAll()
         if (downloadRadioValue.isBlank()) {
             Toast.makeText(this, getString(R.string.select_file), Toast.LENGTH_SHORT).show()
             return
@@ -142,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         downloadID = downloadManager.enqueue(downloadRequest)
     }
     
-    fun selectUrlOptions(view: View) {
+     fun selectUrlOptions(view: View) {
         if (view is RadioButton) {
             
             when (view.getId()) {
@@ -152,9 +154,9 @@ class MainActivity : AppCompatActivity() {
                     status = getString(R.string.status_success)
                 }
                 
-                R.id.loadapp_radio -> {
+                R.id.load_app_radio -> {
                     downloadRadioValue = LOAD_APP_URL
-                    fileName = getString(R.string.loadapp_title)
+                    fileName = getString(R.string.load_app_title)
                     status = getString(R.string.status_failed)
                 }
                 

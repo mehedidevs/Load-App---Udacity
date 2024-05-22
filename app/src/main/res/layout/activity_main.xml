@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".ui.MainActivity">
 
     <ImageView
         android:id="@+id/top_banner"
@@ -37,12 +36,12 @@
             android:textSize="@dimen/font_medium" />
 
         <RadioButton
-            android:id="@+id/loadapp_radio"
+            android:id="@+id/load_app_radio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/spacing_small"
             android:onClick="selectUrlOptions"
-            android:text="@string/loadapp_title"
+            android:text="@string/load_app_title"
             android:textSize="@dimen/font_medium" />
 
         <RadioButton
@@ -55,7 +54,7 @@
             android:textSize="@dimen/font_medium" />
     </RadioGroup>
 
-    <com.mehedi.loadapp.DownloadButton
+    <com.mehedi.loadapp.ui.custom.DownloadButton
         android:id="@+id/btnDownload"
         android:layout_width="0dp"
         android:layout_height="80dp"

@@ -1,11 +1,11 @@
-package com.mehedi.loadapp
+package com.mehedi.loadapp.ui
 
-import com.mehedi.loadapp.MainActivity.Companion.FILE_NAME
+import com.mehedi.loadapp.ui.MainActivity.Companion.FILE_NAME
 import android.app.NotificationManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.mehedi.loadapp.MainActivity.Companion.STATUS
+import com.mehedi.loadapp.ui.MainActivity.Companion.STATUS
 import com.mehedi.loadapp.databinding.ActivityDetailBinding
 
 
