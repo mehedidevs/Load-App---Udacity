@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="LoadingButton">
-        <attr name="button_normal_color" format="color" />
-        <attr name="button_loading_color" format="color" />
-        <attr name="button_completed_color" format="color" />
+    <declare-styleable name="DownloadButton">
+        <attr name="loadingButtonText" format="string" />
+        <attr name="completeButtonText" format="string" />
+        <attr name="loadingButtonColor" format="color" />
+        <attr name="completeButtonColor" format="color" />
+        <attr name="arcColor" format="color" />
     </declare-styleable>
 </resources>

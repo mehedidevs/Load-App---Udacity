@@ -63,14 +63,16 @@
     <com.mehedi.loadapp.ui.custom.DownloadButton
         android:id="@+id/btnDownload"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="56dp"
         android:layout_margin="20dp"
-        app:button_completed_color="@color/colorAccent"
-        app:button_loading_color="@color/colorPrimaryDark"
-        app:button_normal_color="@color/colorPrimary"
+        app:arcColor="@color/colorAccent"
+        app:completeButtonColor="@color/colorPrimaryDark"
+        app:completeButtonText="@string/btn_init_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:loadingButtonColor="@color/colorPrimary"
+        app:loadingButtonText="@string/btn_loading_name" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

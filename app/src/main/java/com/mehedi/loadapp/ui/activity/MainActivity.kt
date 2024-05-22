@@ -19,8 +19,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.mehedi.loadapp.ui.custom.state.ButtonState
 import com.mehedi.loadapp.R
 import com.mehedi.loadapp.databinding.ActivityMainBinding
+import com.mehedi.loadapp.ui.custom.DownloadButton
 import com.mehedi.loadapp.utils.GLIDE_URL
 import com.mehedi.loadapp.utils.LOAD_APP_URL
 import com.mehedi.loadapp.utils.NO_URL
@@ -39,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     private var downloadUrl = ""
     private var downloadedFileUri = ""
+    
+    lateinit var loadingButton: DownloadButton
     
     
     private val notificationManager: NotificationManager by lazy {
@@ -65,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        loadingButton = binding.btnDownload
         
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -82,6 +87,8 @@ class MainActivity : AppCompatActivity() {
         
         binding.btnDownload.setOnClickListener {
             
+            loadingButton.buttonState = ButtonState.Clicked
+            
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
                 ContextCompat.checkSelfPermission(
                     this, android.Manifest.permission.POST_NOTIFICATIONS
@@ -90,6 +97,7 @@ class MainActivity : AppCompatActivity() {
                 requestNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
             } else {
                 
+                loadingButton.isEnabled = false
                 download()
             }
             
@@ -121,6 +129,9 @@ class MainActivity : AppCompatActivity() {
                                 status = getString(R.string.status_success)
                                 downloadedFileUri = uriString
                             }
+                            
+                            loadingButton.isEnabled = true
+                            loadingButton.buttonState = ButtonState.Completed
                         }
                         
                         DownloadManager.STATUS_FAILED -> {
@@ -182,10 +193,12 @@ class MainActivity : AppCompatActivity() {
         
         if (downloadUrl.isBlank()) {
             Toast.makeText(this, getString(R.string.select_file), Toast.LENGTH_SHORT).show()
+            binding.btnDownload.isEnabled = true
             return
         }
         
         binding.btnDownload.isEnabled = false
+        loadingButton.buttonState = ButtonState.Loading
         val downloadRequest =
             DownloadManager.Request(Uri.parse(downloadUrl))
                 .setTitle(getString(R.string.app_name))
@@ -201,6 +214,8 @@ class MainActivity : AppCompatActivity() {
     }
     
     fun selectUrlOptions(view: View) {
+        
+        
         if (view is RadioButton) {
             when (view.getId()) {
                 R.id.glide_radio -> {
